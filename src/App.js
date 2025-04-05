@@ -3,28 +3,30 @@ import axios from 'axios';
 import MusicSheetViewer from './MusicSheetViewer';
 
 function App() {
-  const [file, setFile] = useState(null);
   const [musicXmlBlob, setMusicXmlBlob] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await axios.post(
-      "https://music-ai-backend-zbvf.onrender.com/upload-audio/",
-      formData,
-      { responseType: "blob" }
-    );
-
-    setMusicXmlBlob(res.data);
+  const handleGenerate = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        "https://music-ai-backend-demo-1.onrender.com/generate-sheet/",
+        { responseType: "blob" }
+      );
+      setMusicXmlBlob(res.data);
+    } catch (error) {
+      console.error("Error generating sheet:", error);
+      alert("Something went wrong.");
+    }
+    setLoading(false);
   };
 
   return (
     <div style={{ padding: 40 }}>
       <h2>AI Music Sheet Generator</h2>
-      <input type="file" accept=".mp3,.wav" onChange={e => setFile(e.target.files[0])} />
-      <br /><br />
-      <button onClick={handleUpload}>Generate & Preview Sheet</button>
+      <button onClick={handleGenerate} disabled={loading}>
+        {loading ? "Generating..." : "Generate & Preview Sheet"}
+      </button>
 
       {musicXmlBlob && <MusicSheetViewer musicXmlBlob={musicXmlBlob} />}
     </div>
