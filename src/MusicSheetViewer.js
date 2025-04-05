@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import verovioToolkit from 'verovio';
 
 const MusicSheetViewer = ({ musicXmlBlob }) => {
   const containerRef = useRef();
