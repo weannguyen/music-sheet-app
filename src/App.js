@@ -11,7 +11,7 @@ function App() {
     formData.append("file", file);
 
     const res = await axios.post(
-      "https://music-ai-backend-1l6v.onrender.com/upload-audio/",
+      "https://music-ai-backend-zbvf.onrender.com/upload-audio/",
       formData,
       { responseType: "blob" }
     );
