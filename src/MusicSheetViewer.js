@@ -4,12 +4,12 @@ const MusicSheetViewer = ({ musicXmlBlob }) => {
   const containerRef = useRef();
 
   useEffect(() => {
-    if (!musicXmlBlob) return;
+    if (!musicXmlBlob || !window.verovio) return;
 
     const reader = new FileReader();
     reader.onload = () => {
       const xmlContent = reader.result;
-      const tk = new verovioToolkit();
+      const tk = new window.verovio.toolkit();
       tk.setOptions({
         pageHeight: 1000,
         pageWidth: 1200,
